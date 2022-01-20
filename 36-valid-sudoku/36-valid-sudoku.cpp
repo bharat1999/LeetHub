@@ -25,9 +25,9 @@ public:
                 fre[b[j][i]-'0']++;
             }
         }
-        for(int i=0;i<9;i++)
+        for(int i=0;i<9;i+=3)
         {
-            for(int j=0;j<9;j++)
+            for(int j=0;j<9;j+=3)
             {
                 vector<int> fre(10);
                 int si = (i / 3) * 3;
