@@ -17,16 +17,11 @@ class Solution {
 public:
     int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
         int n = cost.size();
-        float ratio;
-        int max=INT_MIN,idx;
         vector<int> possible;
         for(int i=0;i<n;i++)
         {
-            ratio= float(gas[i])/cost[i];
-            if(ratio>=1)
-            {
+            if((float(gas[i])/cost[i])>=1)
                 possible.push_back(i);
-            }
         }
         for(auto x:possible)
         {
