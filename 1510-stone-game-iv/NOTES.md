@@ -1,6 +1,8 @@
 **Explanation**
 ​
-![image](https://assets.leetcode.com/users/images/aaa792e5-6f8a-4f36-b258-b29f69ad1de5_1642823205.9538863.png)
+![image](https://assets.leetcode.com/users/images/01c43869-37d7-4612-a611-5e8ba0f20610_1642825595.5490935.png)
+​
+​
 ​
 ​
 Here we hvae to check if we can give a number of stones to bob so that he can never win.
