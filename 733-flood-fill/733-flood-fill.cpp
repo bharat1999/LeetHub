@@ -1,8 +1,7 @@
 class Solution {
     void solve(vector<vector<int>>& image,int sr,int sc,int color,int m,int n,vector<vector<bool>>& visited)
     {
-        if(sr<0 or sc<0 or sr>=m or sc>=n)
-            return;
+        //base case handled in call to avoid extra calls
         visited[sr][sc]=true;
         // color up
         if(sr-1>=0 and image[sr-1][sc]==image[sr][sc] and visited[sr-1][sc]==false) 
