@@ -1,1 +1,3 @@
+**Explanation O(n)**
 ​
+Here we can only buy and sell stock once. So we will find all possible combinations of selling that , but we can do this without two loops , we will maintain a cur_min variable which will be initially cost of 1 stock and whenevr we find a value more than cur_min we will calculate profit , which is equivalent to profit till current index or stock and take max and whenever we get a value less than cur_min we will update cur_min so that furthur it can give more profit.
