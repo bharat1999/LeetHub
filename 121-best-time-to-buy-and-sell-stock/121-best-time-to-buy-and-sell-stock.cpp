@@ -1,16 +1,15 @@
 class Solution {
 public:
     int maxProfit(vector<int>& p) {
-        int curmin=p[0];
-        int res=0;
-        int n=p.size();
-        for(int i=0;i<n;i++)
+        int profit = 0;
+        int cur_min = p[0];
+        for(auto x:p)
         {
-            if(p[i]>curmin)
-                res=max(res,p[i]-curmin);
+            if(x>cur_min)
+                profit = max(profit,x-cur_min);
             else
-                curmin=p[i];
+                cur_min = x;
         }
-        return res;
+        return profit;
     }
 };
