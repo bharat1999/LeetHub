@@ -1,0 +1,3 @@
+**Explanation**
+​
+For Binary search tree, while traversing the tree from top to bottom the first node which lies in between the two nodes p and q is the LCA. So we recursively traverse the BST , if current node value is greater than both p and q then our LCA lies in the left subtree of the current node and if it’s is smaller than both p and q then LCA lies on the right substree. Otherwise, the root is LCA because it is the node that lie between value of p and q
