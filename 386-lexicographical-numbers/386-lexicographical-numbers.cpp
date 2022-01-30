@@ -12,7 +12,7 @@ public:
             { //If current exceeds n.
                 current/=10; //Fall back to last element.
                 current++; //Get Next in order.
-                while(current%10==0) 
+                while(current%10==0) // for case like 199 + 1 =200 so we need                   //to make it 2 first befor adding to answer
                     current/=10; //Remove extra trailing zeros.
             }
         }
