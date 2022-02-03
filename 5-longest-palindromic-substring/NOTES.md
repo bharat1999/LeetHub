@@ -10,7 +10,10 @@ and check is s[i] == s[j] than we will check if j-i=1 means it is a substring of
 dp[i][j] = true and calcualte its len and if its ax we will store that substring
 ​
 ​
+but we will start iterating from substring from end bcz if we start from begin we will encounter some dp index which have not been filled
+For example i =0 and j =3 we need dp[1][2] but it will not be filled as we have not yet iterated on i=1
 ​
+but if we start i from n-1 we will not encounter this
 ​
 ​
 ​
