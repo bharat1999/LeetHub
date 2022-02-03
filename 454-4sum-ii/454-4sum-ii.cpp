@@ -9,10 +9,7 @@ public:
         int c=0;
         for(auto k:nums3)
             for(auto l:nums4)    
-            {
-                if(mp.count(-(k+l))>0)
-                    c+=mp[-(k+l)];
-            }
+                c+=mp[-(k+l)];
         return c;
     }
 };
