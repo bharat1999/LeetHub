@@ -3,16 +3,15 @@ public:
     int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {
         int n=nums1.size();
         unordered_map<int,int> mp;
-        for(int i=0;i<n;i++)
-            for(int j=0;j<n;j++)
-                mp[nums3[i]+nums4[j]]++;
+        for(auto i:nums1)
+            for(auto j:nums2)
+                mp[i+j]++;
         int c=0;
-        for(int i=0;i<n;i++)
-            for(int j=0;j<n;j++)    
+        for(auto k:nums3)
+            for(auto l:nums4)    
             {
-                int tmp = -(nums1[i]+nums2[j]);
-                if(mp.count(tmp)>0)
-                    c+=mp[tmp];
+                if(mp.count(-(k+l))>0)
+                    c+=mp[-(k+l)];
             }
         return c;
     }
