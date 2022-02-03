@@ -21,9 +21,6 @@ public:
         // as string starting and ending at same index is always //pallindrome
         for(int i=0;i<n;i++)
             dp[i][i]=true;
-        // checking if 2 size substring is pallindrome or not
-        for(int i=0;i<n-1;i++)
-            dp[i][i+1] = s[i]==s[i+1];
         string ans="";
         // single element will always be the answer
         ans.push_back(s[0]);
