@@ -34,7 +34,6 @@ public:
             ans2.push_back(s2.top());
             s2.pop();
         }
-        cout<<ans1<<" "<<ans2;
         return ans1==ans2;
     }
 };
