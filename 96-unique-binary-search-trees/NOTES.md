@@ -9,7 +9,7 @@ So our relation will be
 ans=0
 for(int i =1 to n)
 f(i) = { 1 , i <=1 , as for one node we have only one possible tree
-ans+= s(i-1) * f(i+1)
+ans+= f(i-1) * f(i+1)
 }
 But we have to find unique structure tree irespective of values
 So instead of i+1 we can pass the number of nodes that can be possible in left and right
