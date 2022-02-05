@@ -4,7 +4,7 @@ class Solution {
         {
             int m=s1.size();
             int n=s2.size();
-            vector<vector<int>> dp(m+1,vector<int> (n+1,-1));
+            vector<vector<int>> dp(m+1,vector<int> (n+1));
             for(int i=m; i>=0; i--) 
             {
 		        for(int j=n; j>=0; j--) 
