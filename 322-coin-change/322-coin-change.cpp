@@ -5,6 +5,7 @@ public:
         if(n==0)
             return 0;  
         long long int dp[m][n+1];
+        // amount is 0 so 0 coins required
         for(int i=0;i<m;i++)
             dp[i][0]=0;
         for(int i=0;i<m;i++)
