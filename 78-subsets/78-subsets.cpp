@@ -8,7 +8,7 @@ public:
             vector<int> tmp;
 		    for(int i=0; i<n; i++) 
             {
-			    // if the ith bit is set, include the element at the ith index in the subseq.
+			    // if the ith bit of no is set, include the element at the ith index in the subseq.
 			    if((1<<i)&no)
                     tmp.push_back(nums[i]);
 			}
