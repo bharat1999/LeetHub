@@ -21,7 +21,7 @@ public:
         bool ans = false;
         for(int i=0;i<m;i++)
             for(int j=0;j<n;j++)
-                if(board[i][j]==word[0])
+                if(board[i][j]==word[0]) // only search for those index which have first char of word
                     ans|= dfs(board,i,j,0,word);
         return ans;
         
