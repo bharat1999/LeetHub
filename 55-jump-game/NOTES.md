@@ -22,10 +22,3 @@ if it is true our answer is true otherwise false
 ​
 ​
 ​
-​
-​
-​
-​
-​
-​
-​
