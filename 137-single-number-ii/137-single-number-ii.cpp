@@ -8,7 +8,7 @@ public:
                 bitSum+=(1&(x>>i));
             }
             if(bitSum%3){
-                ans=ans|(1<<i);
+                ans|=(1<<i);
             }
         }
         return ans;
