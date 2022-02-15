@@ -4,8 +4,8 @@ public:
         int ans=0;
         for(int i=0;i<32;i++){
             int bitSum=0;
-            for(int num:nums){
-                bitSum+=((num>>i)&1);
+            for(int x:nums){
+                bitSum+=(1&(x>>i));
             }
             if(bitSum%3){
                 ans=ans|(1<<i);
