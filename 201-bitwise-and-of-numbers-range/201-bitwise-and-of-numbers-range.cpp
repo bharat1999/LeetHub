@@ -3,10 +3,8 @@ public:
     int rangeBitwiseAnd(int left, int right) {
         if(right==0 or left==0)
             return 0;
-        if(left == right)
-            return left;
-        //if(right-left==1)
-            //return right&left;
+        //if(left == right)
+            //return left;
         int leftmsb=log2(left);
         int rightmsb=log2(right);
         if(leftmsb<rightmsb)
