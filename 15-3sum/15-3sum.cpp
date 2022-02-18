@@ -20,9 +20,11 @@ public:
                         ans.push_back({nums[i],nums[s],nums[e]});
                         s++;
                         e--;
-                        while(s<e and nums[s]==nums[s-1]) // to avoid not taking same number
+                        // to avoid not taking same number
+                        while(s<e and nums[s]==nums[s-1]) 
                           s++;
-                        while(s<e and nums[e]==nums[e+1]) // to avoid not taking same number
+                        // to avoid not taking same number
+                        while(s<e and nums[e]==nums[e+1]) 
                           e--;
             
                     }    
