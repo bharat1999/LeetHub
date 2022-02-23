@@ -39,14 +39,14 @@ public:
             q.pop();
             for (auto x : cur -> neighbors) 
             {
-                // if current node is not cloned before
+                // if current node not cloned before clone it and add to queue
                 if (cloned.find(x) == cloned.end()) 
                 {
                     // creating new node 
                     cloned[x] = new Node(x -> val);
                     q.push(x);
                 }
-                // add current neighbour to list at node of cur
+                //in current node push adjcant node
                 cloned[cur] -> neighbors.push_back(cloned[x]);
             }
         }
