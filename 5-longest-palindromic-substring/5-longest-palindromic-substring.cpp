@@ -31,6 +31,7 @@ public:
             {
                 if(s[i]==s[j])
                 {
+                    // if substring of only len 2 or the substring i+1,j-1 is pallindrome
                     if(j-i==1 or dp[i+1][j-1])
                     {
                         dp[i][j]=true;
