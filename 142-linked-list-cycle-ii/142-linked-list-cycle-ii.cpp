@@ -7,39 +7,37 @@
  * };
  */
 class Solution {
-    bool isCycle(ListNode *head)
-    {
-       if(!head)
-           return false;
-        ListNode *slow=head;
-        ListNode *fast=head;
+     bool hasCycle(ListNode *head) {
+        if(!head)
+            return false;
+        auto slow=head,fast=head;
         while(fast and fast->next)
         {
-            slow = slow->next;
-            fast = fast->next->next;
-            if(slow==fast)
+            fast=fast->next->next;
+            slow=slow->next;
+            if(slow==fast) // if at ay point both are same mean cycle exist
                 return true;
         }
         return false;
     }
 public:
-    ListNode *detectCycle(ListNode *head) {
-        if(!isCycle(head))
-            return NULL;
-        ListNode *slow=head;
-        ListNode *fast=head;
+    ListNode *detectCycle(ListNode *head)
+    {
+        if(!head or !hasCycle(head))
+            return NULL;   
+        auto slow=head,fast=head;
         while(fast and fast->next)
         {
-            slow = slow->next;
-            fast = fast->next->next;
-            if(slow==fast)
+            fast=fast->next->next;
+            slow=slow->next;
+            if(slow==fast) // if at ay point both are same mean cycle exist
                 break;
         }
-        slow = head;
+        slow=head;
         while(slow!=fast)
         {
-            slow=slow->next;
             fast=fast->next;
+            slow=slow->next;
         }
         return slow;
     }
