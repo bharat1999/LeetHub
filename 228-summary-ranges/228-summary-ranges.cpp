@@ -4,26 +4,27 @@ public:
         int n = nums.size();
         if(n==0)
             return {};
+        int start=nums[0];
         vector<string> ans;
-        int left = nums[0];
-        int right = nums[0];
-        for(int i=1;i<n;i++)
+        for(int i=0;i<n-1;i++)
         {
-            if(nums[i]==nums[i-1]+1)
-                right = nums[i];
+            if(nums[i+1]==nums[i]+1)
+            {
+                continue;
+            }
             else
             {
-                if(left == right)
-                    ans.push_back(to_string(left));
+                if(start==nums[i])
+                    ans.push_back(to_string(nums[i]));
                 else
-                    ans.push_back(to_string(left) + "->" + to_string(right));
-                left = right = nums[i];
+                    ans.push_back(to_string(start)+"->"+to_string(nums[i]));
+                start = nums[i+1];
             }
         }
-        if(left == right)
-            ans.push_back(to_string(left));
+        if(start==nums[n-1])
+            ans.push_back(to_string(nums[n-1]));
         else
-            ans.push_back(to_string(left) + "->" + to_string(right));
+            ans.push_back(to_string(start)+"->"+to_string(nums[n-1]));
         return ans;
     }
 };
