@@ -12,6 +12,6 @@ public:
             j++;
         }
         // if we found all the chars of s than its true else false;
-        return i == m ? 1 : 0;
+        return i == m ? true : false;
     }
 };
