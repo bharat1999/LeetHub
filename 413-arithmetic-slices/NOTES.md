@@ -20,4 +20,3 @@ than d[i] = 1 + dp[i-1] as tptal slices will be 1 for current + the  dp[i-1]
 ​
 ​
 ​
-​
