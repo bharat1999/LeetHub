@@ -1,17 +1,34 @@
 class Solution {
-    pair<int, int> adj[4] = {{0, -1}, {0 , 1}, {1, 0}, {-1, 0}};
+    vector<vector<int>> dir = {{0, -1}, {0 , 1}, {1, 0}, {-1, 0}};
+    queue<pair<int,int>> q;
+    void dfs(vector<vector<int>> &grid, vector<vector<bool>> &visited, int r, int c,int n,int m) 
+    {
+        if(r<0 or r>=n or c<0 or c>=m or visited[r][c] or !grid[r][c]) 
+            return;
+        visited[r][c] = true;
+        q.push({ r, c });
+        for (auto d:dir)
+            dfs(grid, visited, r +d[0] , c + d[1],n,m);
+    }
+    bool isValid(int x,int y,int n,int m,vector<vector<bool>>& visited)
+    {
+        if(x >=0 and x<n and y>= 0 and y<m and !visited[x][y])
+            return true;
+        return false;
+    }
 public:
     int shortestBridge(vector<vector<int>>& grid) {
-        vector<vector<bool>> visited(grid.size(), vector<bool>(grid[0].size(), false));
-        queue<pair<int, int>> myQ;
+        int n = grid.size();
+        int m = grid[0].size();
+        vector<vector<bool>> visited(n, vector<bool>(m, false));
         bool foundIsland = false;
         
-        for (int i = 0; i < grid.size(); i++) {
+        for (int i = 0; i < n; i++) {
             if (foundIsland) 
                 break;
-            for (int j = 0; j < grid[0].size(); j++) {
+            for (int j = 0; j <n; j++) {
                 if (grid[i][j]) {
-                    traceIsland(grid, visited, myQ, i, j);
+                    dfs(grid, visited, i, j,n,m);
                     foundIsland = true;
                     break;
                 }
@@ -19,34 +36,29 @@ public:
         }
         
         int distance = 0;
-        while (!myQ.empty()) {
-            auto size = myQ.size();
-            while (size > 0) {
-                auto frnt = myQ.front();
-                myQ.pop();
-                for (int i = 0; i < 4; i++) {
-                    int x = frnt.first + adj[i].first;
-                    int y = frnt.second + adj[i].second;
-                    if (x >= 0 and x < grid.size() and y >= 0 and y < grid[0].size() and !visited[x][y]) {
+        while (!q.empty()) 
+        {
+            auto size = q.size();
+            while (size--) 
+            {
+                auto f = q.front();
+                q.pop();
+                for (auto d:dir) 
+                {
+                    int x = f.first + d[0];
+                    int y = f.second + d[1];
+                    if (isValid(x,y,n,m,visited)) {
                         if (grid[x][y])
                             return distance;
                         visited[x][y] = true;
-                        myQ.push({x, y});
+                        q.push({x, y});
                     }
                 }
-                size--;
             }
             distance++;
         }
         return distance;
     }
     
-    void traceIsland(vector<vector<int>> &grid, vector<vector<bool>> &visited, queue<pair<int, int>> &myQ, int r, int c) {
-        if (r < 0 or r >=grid.size() or c < 0 or c >= grid[0].size() or visited[r][c] or !grid[r][c])  
-            return;
-        visited[r][c] = true;
-        myQ.push({ r, c });
-        for (int i = 0; i < 4; i++)
-            traceIsland(grid, visited, myQ, r + adj[i].first, c + adj[i].second);
-    }
+    
 };
