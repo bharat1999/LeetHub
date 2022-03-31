@@ -18,7 +18,6 @@ class Solution {
             }
             i++;
         }
-        cout<<sum<<" "<<count<<endl;
         return count<=m;
     }
 public:
@@ -26,9 +25,12 @@ public:
         int sum = 0;
         for(auto x:nums)
             sum+=x;
-        int s = 0;
+        int mx=-1;;
+        for(auto x:nums)
+            mx=max(mx,x);
+        int s = mx;
         int e = sum;
-        int ans=INT_MAX;
+        int ans;
         while(s<=e)
         {
             int mid = e - (e-s)/2;
