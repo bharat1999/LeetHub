@@ -2,7 +2,7 @@ class MyHashSet {
     vector<int> hash;
 public:
     MyHashSet() {
-        hash.resize(10e6+1,-1);
+        hash.resize(1000001,-1);
     }
     
     void add(int key) {
