@@ -1,52 +1,63 @@
 class Solution {
-    unordered_map<int,vector<int>> adj;
-    void DFS(int u,vector<int>& disc,vector<int>& low,vector<int>& parent,vector<vector<int>>& bridges)
+private:
+    // low is earliest visited vertex (the vertex with minimum discovery time) that can be reached from subtree
+    //rooted with current vertex
+    // disc is the first discovery time of each node
+    vector<int> low, disc;
+    int timer = 0;
+    vector<vector<int>> res;
+
+private:
+    void dfs(int node, int parent, vector<int> adj[], vector<bool> &vis)
     {
-        static int time = 0;    //static timestamp to take memory once
-        disc[u] = low[u] = time;
-        time +=1;
+        vis[node] = true;
+        disc[node] = low[node] = timer++;
         
-        for(int v: adj[u])
+        for(auto &it : adj[node])
         {
-            if(disc[v]==-1) //If v is not visited
+            if(it == parent) continue;
+            
+            if(!vis[it])
             {
-                parent[v] = u;
-                DFS(v,disc,low,parent,bridges);
-                // after visiting neighbour of u , we update low of u 
-                // bcz their can be a backedge from v so that reach time of u cna be lower
-                low[u] = min(low[u],low[v]);
+                dfs(it, node, adj, vis);
                 
-                // if low of v is greater than discovery time of u 
-                // that means their is no back edge so add to bridge
-                if(low[v] > disc[u])
-                    bridges.push_back(vector<int>({u,v}));
-            }
-            // if v is not parent of u check for back edge from u to v
-            else if(v!=parent[u])
-                low[u] = min(low[u],disc[v]);
+                // update low bcz if their is back edge from neighbour
+                low[node] = min(low[node], low[it]);
+                // if earliest visited node time is greater than disc of root it means its bridge
+                if(low[it] > disc[node])
+                {
+                    res.push_back({node, it});
+                }
+             }
+            
+            else{
+                low[node] = min(low[node], disc[it]);
+             }
         }
     }
-    void findBridges_Tarjan(int V,vector<vector<int>>& bridges)
-    {
-        // disc will have first discovery time of each node 
-        // low will have the earliest visited vertex (the vertex with minimum discovery time) that can be reached from subtree rooted with current node
-        vector<int> disc(V,-1),low(V,-1),parent(V,-1);
-        //Apply DFS for each component
-        for(int i=0;i<V;++i)
-            if(disc[i]==-1)
-                DFS(i,disc,low,parent,bridges);
-    }
-public:
-    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
-        // Adjancy List
-        for(int i=0;i<connections.size();++i)
+    
+public:    
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& edges) {
+        
+        
+        vector<int> adj[n];
+        for(auto &it : edges)
         {
-            adj[connections[i][0]].push_back(connections[i][1]);
-            adj[connections[i][1]].push_back(connections[i][0]);
+            adj[it[0]].push_back(it[1]);
+            adj[it[1]].push_back(it[0]);
         }
         
-        vector<vector<int>> bridges; //Store all the bridges as pairs
-        findBridges_Tarjan(n,bridges); // Applying Tajan's Algo
-        return bridges;
+        vector<bool> vis(n, false);
+        low.resize(n);
+        disc.resize(n);
+        
+        for(int i = 0; i < n; i++)
+        {
+            if(!vis[i])
+                dfs(i, -1, adj, vis);                
+        }
+        
+        
+        return res;
     }
 };
