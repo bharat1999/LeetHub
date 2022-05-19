@@ -1,15 +1,15 @@
 class Solution {
 public:
     vector<vector<int>> dir={{0,1},{1,0},{-1,0},{0,-1}};
-    int dp[201][201];
+    vector<vector<int>> dp;
     int n,m;
     bool isValid(int x, int y){
         if(x<0 or y<0 or x>=n or y>=m) return false;
         return true;
     }
     
-    int solve(vector<vector<int>>& matrix, int x, int y){
-        
+    int solve(vector<vector<int>>& matrix, int x, int y)
+    {    
         if(dp[x][y] != -1) 
             return dp[x][y];
         int cur = 1;
@@ -25,9 +25,9 @@ public:
     }
     
     int longestIncreasingPath(vector<vector<int>>& matrix) {
-        memset(dp,-1,sizeof(dp));
         int ans = 0;
         n = matrix.size(), m = matrix[0].size();
+        dp.resize(n,vector<int> (m,-1));
         for(int i=0; i<n; ++i){
             for(int j=0; j<m; ++j){
                 ans = max(ans, solve(matrix,i,j));
