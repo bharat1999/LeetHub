@@ -1,22 +1,23 @@
 class Solution {
 public:
-    int dx[4] = {0,1,0,-1};
-    int dy[4] = {1,0,-1,0};
+    vector<vector<int>> dir={{0,1},{1,0},{-1,0},{0,-1}};
     int dp[201][201];
-    
-    bool isValid(int r, int c, int x, int y){
-        if(x>=0 && x<r && y>=0 && y<c) return true;
-        return false;
+    int n,m;
+    bool isValid(int x, int y){
+        if(x<0 or y<0 or x>=n or y>=m) return false;
+        return true;
     }
     
     int solve(vector<vector<int>>& matrix, int x, int y){
-        int n = matrix.size(), m = matrix[0].size();
         
-        if(dp[x][y] != -1) return dp[x][y];
+        if(dp[x][y] != -1) 
+            return dp[x][y];
         int cur = 1;
-        for(int i=0; i<4; ++i){
-            int x1 = x+dx[i], y1=y+dy[i];
-            if(isValid(n,m,x1,y1) && matrix[x1][y1] > matrix[x][y]){
+        for(auto k:dir)
+        {
+            int x1 = x+k[0], y1=y+k[1];
+            if(isValid(x1,y1) and matrix[x1][y1] > matrix[x][y])
+            {
                 cur = max(cur, 1 + solve(matrix,x1,y1));
             }
         }
@@ -26,7 +27,7 @@ public:
     int longestIncreasingPath(vector<vector<int>>& matrix) {
         memset(dp,-1,sizeof(dp));
         int ans = 0;
-        int n = matrix.size(), m = matrix[0].size();
+        n = matrix.size(), m = matrix[0].size();
         for(int i=0; i<n; ++i){
             for(int j=0; j<m; ++j){
                 ans = max(ans, solve(matrix,i,j));
