@@ -12,16 +12,16 @@ public:
     {    
         if(dp[x][y] != -1) 
             return dp[x][y];
-        int cur = 1;
+        int cur = 0;
         for(auto k:dir)
         {
             int x1 = x+k[0], y1=y+k[1];
             if(isValid(x1,y1) and matrix[x1][y1] > matrix[x][y])
             {
-                cur = max(cur, 1 + solve(matrix,x1,y1));
+                cur = max(cur, solve(matrix,x1,y1));
             }
         }
-        return dp[x][y] = cur;
+        return dp[x][y] = 1 + cur;
     }
     
     int longestIncreasingPath(vector<vector<int>>& matrix) {
