@@ -16,7 +16,7 @@ public:
         for(auto k:dir)
         {
             int x1 = x+k[0], y1=y+k[1];
-            if(isValid(x1,y1) and matrix[x1][y1] > matrix[x][y])
+            if(x1>=0 and y1>=0 and x1<n and y1<m and matrix[x1][y1] > matrix[x][y])
             {
                 cur = max(cur, solve(matrix,x1,y1));
             }
