@@ -3,37 +3,23 @@ class Solution {
     {
         return a.size()<b.size();
     }
-    bool isPrede(string& a, string& b)
-    {
-        if (a.size() + 1 != b.size())
-            return false;
-        int i = 0;
-        int j = 0;
-        while (i < a.size() and j < b.size()) 
-        {
-            if (a[i] == b[j])
-                i++;
-            j++;
-        }
-        return i == a.size();
-    }
 public:
     int longestStrChain(vector<string>& words) {
-        int n = words.size();
-        vector<int> LIS(n,1);
+        unordered_map<string,int> dp;
         sort(words.begin(),words.end(),cmp);
-        for(int i=0;i<n;i++)
+        int ans = 1;
+        for(auto x:words)
         {
-            for(int j=0;j<i;j++)
+            // add x in dp
+            dp[x] = 1;
+            for(int i=0,n=x.size();i<n;i++)
             {
-                //if jth words is predecessor of ith word and 
-                // it can incrase LIS 
-                if(isPrede(words[j],words[i]) and LIS[i]<=LIS[j]+1)
-                {
-                    LIS[i] = LIS[j]+1;
-                }   
+                // make new string without ith char
+                string temp = x.substr(0,i)+x.substr(i+1);
+                dp[x] = max(dp[x],dp[temp]+1);
             }
+            ans=max(ans,dp[x]);
         }
-        return *max_element(LIS.begin(),LIS.end());
+        return ans;
     }
 };
