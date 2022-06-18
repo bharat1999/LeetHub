@@ -36,7 +36,6 @@ public:
                 // insert in trie with index i
                 insert(word,i);
             }
-            cout<<endl;
         }
     }
     
