@@ -14,8 +14,8 @@ class WordFilter {
                 string prefix = word.substr(0,j);
 				// Loop through the word in array to generate its suffix.
                 for (int k = 0;k<word.size();k++) {
-                    string suffix = word.substr(k, word.size());
-					// Stroting the key in hashmap that needs to be compared in the function "f".
+                    string suffix = word.substr(k);
+					// inserting the key in hashmap that needs to be compared in the function "f".
                     mp[prefix + "*" + suffix] = i + 1;
                 }
             }
