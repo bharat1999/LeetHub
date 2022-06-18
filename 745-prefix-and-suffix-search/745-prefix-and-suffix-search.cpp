@@ -1,96 +1,29 @@
-class node
-{
-    public:
-        unordered_map<char,node*> children; 
-        int idx;
-        node()
-        {
-            idx=-1;
-        }
-        node* getChild(char ch)
-        {
-            if(!children.count(ch))
-                children[ch] = new node();
-            return children[ch];
-        }
-        bool isChild(char ch)
-        {
-            return children.count(ch)>0;
-        }
-};
-class Trie {
-    node *root;
-public:
-    Trie(vector<string> words) {
-        root = new node();
-        int n = words.size();
-        // from end bcz is same string than largest index will be found first
-        for(int i=0;i<n;i++)
-        {
-            string word = "#" + words[i];
-            for(int m=words[i].size(),j=m-1;j>=0;j--)
-            {
-                // means words = #apple it will add make word as e#apple
-                // than we get l so it become le#apple
-                word = words[i][j]+word;
-                // insert in trie with index i
-                insert(word,i);
-            }
-        }
-    }
-    
-    void insert(string word,int i) {
-        node *cur = root;
-        for(char w:word)
-            cur = cur->getChild(w);
-        cur->idx = i;
-    }
-    
-    int search(string word) {
-        node *cur = root;
-        for(char w:word)
-        {
-            if(cur->isChild(w))
-            {
-                cur = cur->getChild(w);
-            }
-            else
-                return -1;
-        }
-        // if we reach here it mean we have that word
-        // that idx of cur ptr will not be answer bcz is case of e#appple e will hold idx
-        // but if search is e#a our cur will be at a
-        // so we have to do dfs on a till its children to get max
-        return DFS(cur);
-    }
-    int DFS(node *cur)
-    {
-        int res = cur->idx;
-        for(auto x:cur->children)
-        {
-            // x.second will have the address of child
-            res = max(res,DFS(x.second));
-        }
-        return res;
-    }
-};
-
-
 class WordFilter {
-    Trie *t;
-public:
+   private:
+   // creating Hashmap of string and integer
+    unordered_map<string, int> mp;
+
+   public:
     WordFilter(vector<string>& words) {
-        t = new Trie(words);
+        int n = words.size();
+		// Loop through entire words array that contains all the words in dictionary
+        for (int i = 0; i < n; i++) {
+            string word = words[i];
+			// Look at each word and create its prefix.
+            for (int j = 1;j<=word.size();j++) {
+                string prefix = word.substr(0,j);
+				// Loop through the word in array to generate its suffix.
+                for (int k = 0;k<word.size();k++) {
+                    string suffix = word.substr(k, word.size());
+					// Stroting the key in hashmap that needs to be compared in the function "f".
+                    mp[prefix + "*" + suffix] = i + 1;
+                }
+            }
+        }
     }
-    
+
     int f(string prefix, string suffix) {
-        string toSearch = suffix+"#"+prefix;
-        return t->search(toSearch);
+        string s = prefix + "*" + suffix;
+        return mp[s] - 1;
     }
 };
-
-/**
- * Your WordFilter object will be instantiated and called as such:
- * WordFilter* obj = new WordFilter(words);
- * int param_1 = obj->f(prefix,suffix);
- */
