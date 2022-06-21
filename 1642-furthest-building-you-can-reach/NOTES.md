@@ -1,0 +1,3 @@
+**Explanation**
+​
+Here the best greedy approach is to use ladder for tall buildings. So what we do we avoid using ladded untill we have bricks . suppose once we finish all ours bircks , than in that case we need to use ladded so , what will be do we replace the tallest jump made so far witt ladder that will give us back that much bricks , SO we use a max heap to sotre the bricks used in each jump and whenver we are left we no bricks we add the top to max heap to bricks and use ladder
