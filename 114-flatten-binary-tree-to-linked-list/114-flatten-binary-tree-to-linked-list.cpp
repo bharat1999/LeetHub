@@ -11,25 +11,25 @@
  */
 class Solution {
     vector<TreeNode*> v;
-    void pre(TreeNode *root)
+    void solve(TreeNode *root)
     {
+        // if NULL
         if(!root)
             return;
-        v.push_back(root);
-        pre(root->left);
-        pre(root->right);
+        //temporarily store right of root in tmp
+        TreeNode *tmp = root->right;
+        //make left of root as Null and right as left sol
+        root->right=root->left;
+        root->left = NULL;
+        //search for rightmost child of right to join tmp
+        TreeNode *cur = root;
+        while(cur->right)
+            cur=cur->right;
+        cur->right = tmp;
+        solve(root->right);
     }
 public:
     void flatten(TreeNode* root) {
-        pre(root);
-        TreeNode *t = new TreeNode(-1);
-        TreeNode *cur = t;
-        for(auto x:v)
-        {
-            cur->right = x;
-            x->left = NULL;
-            cur = cur->right;
-        }
-        root = cur->right;
+        solve(root);
     }
 };
