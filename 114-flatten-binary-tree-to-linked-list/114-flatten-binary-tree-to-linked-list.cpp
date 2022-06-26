@@ -13,19 +13,24 @@ class Solution {
     vector<TreeNode*> v;
     void solve(TreeNode *root)
     {
-        // if NULL
-        if(!root)
+        // if leaf or NULL
+        if(!root or (!root->left and !root->right))
             return;
-        //temporarily store right of root in tmp
-        TreeNode *tmp = root->right;
-        //make left of root as Null and right as left sol
-        root->right=root->left;
-        root->left = NULL;
-        //search for rightmost child of right to join tmp
-        TreeNode *cur = root;
-        while(cur->right)
-            cur=cur->right;
-        cur->right = tmp;
+        // if root have left child
+        if(root->left)
+        {
+            solve(root->left);
+            //temporarily store right of root in tmp
+            TreeNode *tmp = root->right;
+            //make left of root as Null and right as left sol
+            root->right=root->left;
+            root->left = NULL;
+            //search for rightmost child of right to join tmp
+            TreeNode *cur = root;
+            while(cur->right)
+                cur=cur->right;
+            cur->right = tmp;
+        }
         solve(root->right);
     }
 public:
