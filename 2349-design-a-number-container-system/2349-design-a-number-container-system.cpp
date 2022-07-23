@@ -17,7 +17,7 @@ public:
         {
             int prev = idxToVal[index];
             // remove index of previous form valToIdx
-            valToIdx[prev].erase(valToIdx[prev].find(index));
+            valToIdx[prev].erase(index);
             //update in idxToVal and valToIdx
             idxToVal[index] = number;
             valToIdx[number].insert(index);
