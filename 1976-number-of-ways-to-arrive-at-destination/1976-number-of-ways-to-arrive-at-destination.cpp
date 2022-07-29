@@ -23,11 +23,8 @@ public:
         q.push({0,0});
         while(!q.empty())
         {
-            auto p = q.top();
+            auto [cur_dis,cur_node] = q.top();
             q.pop();
-            ll cur_dis = p.first;
-            ll cur_node = p.second;
-        
             for(auto arr : adj[cur_node])
             {
                 ll new_dis = cur_dis + arr[1];
