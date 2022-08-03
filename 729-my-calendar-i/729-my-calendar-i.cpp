@@ -1,5 +1,5 @@
 class MyCalendar {
-    vector<pair<int,int>> cal;
+    map<int,int> cal;
 public:
     MyCalendar() {
         
@@ -8,17 +8,19 @@ public:
     bool book(int start, int end) {
         if(cal.size()==0)
         {
-            cal.push_back({start,end});
+            cal[start] = end;
             return true;
         }
-        for(auto x:cal)
+        auto it = cal.lower_bound(start);
+        if(it!=cal.end() and it->first<end)
+            return false;
+        if(it!=cal.begin())
         {
-            if(x.first>=end or x.second<=start)
-                continue;
-            else 
+            it--;
+            if(it->second>start)
                 return false;
         }
-        cal.push_back({start,end});
+        cal[start] = end;
         return true;
     }
 };
