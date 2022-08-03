@@ -1,52 +1,38 @@
 class Solution {
-    vector<bool> visited;
-    stack<int> st;
-    map<int,list<int>> adj;
-    vector<int> topoOrder;
-    void topo(int i)
-    {
-        visited[i] = true;
-        for(auto x:adj[i])
-        {
-            if(!visited[x])
-                topo(x);
-        }
-        st.push(i);
-    }
-    bool checkCycle(int n)
-    {
-        unordered_map<int,int> pos;
-        int index = 0;
-        while(!st.empty())
-        {
-            pos[st.top()] = index++;
-            topoOrder.push_back(st.top());
-            st.pop();
-        }
-        for(int i=0;i<n;i++)
-        {
-            for(auto x:adj[i])
-            {
-                //if position of child less than parent means cycle detected
-                if(pos[i]>pos[x])
-                    return true;
-            }
-        }
-        return false;
-    }
 public:
     vector<int> findOrder(int n, vector<vector<int>>& p) {
+        vector<int> inDegree(n,0);
+        map<int,list<int>> adj;
         for(auto x:p)
+        {
             adj[x[1]].push_back(x[0]);
-        visited.resize(n,false);
+            inDegree[x[0]]++;
+        }
+        vector<int> topoOrder;
+        queue<int> q;
         for(int i=0;i<n;i++)
         {
-            if(!visited[i])
-                topo(i);
+            if(inDegree[i]==0)
+                q.push(i);
         }
-        // if cycle exist
-        if(checkCycle(n))
-            return {};
-        return topoOrder;
+        while(!q.empty())
+        {
+            int cur = q.front();
+            q.pop();
+            // decrease in degree of all neighbours by q
+            for(auto x:adj[cur])
+            {
+                inDegree[x]--;
+                if(inDegree[x]==0)
+                    q.push(x);
+            }
+            // add current to topoOrder
+            topoOrder.push_back(cur);
+        }
+        // if topoOrder size equal to n meanas no cycle
+        if(topoOrder.size()==n)
+            return topoOrder;
+        // else means we have a cycle
+        return {};
     }
 };
