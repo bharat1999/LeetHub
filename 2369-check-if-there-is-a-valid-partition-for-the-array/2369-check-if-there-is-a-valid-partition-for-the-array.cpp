@@ -7,10 +7,7 @@ class Solution {
             return true;
         if(dp[i]!=-1)
         {
-            if(dp[i]==0)
-                return false;
-            else if(dp[i]==1)
-                return true;
+            return dp[i];
         }
         bool ans = false;
         if(i+1<n)
@@ -25,11 +22,7 @@ class Solution {
             if(nums[i+1]-nums[i]==1 and nums[i+2]-nums[i+1]==1)
                 ans|=solve(nums,i+3);
         }
-        if(ans)
-            dp[i] = 1;
-        else
-            dp[i] = 0;
-        return ans;
+        return dp[i] = ans;
     }
 public:
     bool validPartition(vector<int>& nums) {
