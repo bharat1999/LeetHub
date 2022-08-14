@@ -1,66 +1,72 @@
 class Solution
 {
 public:
-    vector<vector<string>> res;
-    vector<string> te;
-    unordered_map<string, int> mp;
-    string b;
-    void dfs(string s)  // Step 2
+    vector<vector<string>> ans;
+    vector<string> path;
+    unordered_map<string, int> depth;
+    // Step 2 : We will dfs back from endword to begin to avoid unnecessary DFS calls
+    void dfs(string cur,string &bw) 
     {
-        te.push_back(s);
-        if (s == b)
+        path.push_back(cur);
+        if (cur == bw)
         {
-            vector<string> x = te;
-            reverse(x.begin(), x.end());
-            res.push_back(x);
-            te.pop_back();
+            vector<string> temp = path;
+            // reverse cause we are doing reverse dfs
+            reverse(temp.begin(),temp.end());
+            // add to ans
+            ans.push_back(temp);
+            path.pop_back();
             return;
         }
-        int cur = mp[s];
-        for (int i = 0; i < s.size(); i++)
+        int curDepth = depth[cur];
+        string v = cur;
+        for (int i = 0; i < cur.size(); i++)
         {
-            char c = s[i];
-            for (char cc = 'a'; cc <= 'z'; cc++)
+            char c = v[i];
+            for (char a = 'a'; a <= 'z'; a++)
             {
-                s[i] = cc;
-                if (mp.count(s) && mp[s] == cur - 1)
-                    dfs(s);
+                v[i] = a;
+                // if we have new word word in list its just one level ahead of current dfs on it
+                if (depth.count(v) and depth[v] == curDepth - 1)
+                    dfs(v,bw);
             }
-            s[i] = c;
+            // backtrack to original
+            v[i] = c;
         }
-        te.pop_back();
+        path.pop_back();
         return;
     }
     vector<vector<string>> findLadders(string beginWord, string endWord, vector<string> &wordList)
     {
         unordered_set<string> dict(wordList.begin(), wordList.end());
-        b = beginWord;
+        if(dict.find(endWord)==dict.end())
+            return ans;
         queue<string> q;
-        int k = beginWord.size();
-        q.push({beginWord});
-        mp[beginWord] = 0;
-        while (!q.empty())  // Step 1
+        q.push(beginWord);
+        depth[beginWord] = 0;
+        // Step 1 finding shortest path
+        while (!q.empty())  
         {
             int n = q.size();
             while (n--)
             {
-                string t = q.front();
+                string u = q.front();
                 q.pop();
-                int x = mp[t] + 1;
-                for (int i = 0; i < k; i++)
+                int x = depth[u] + 1;
+                for (int i = 0,s=u.size(); i < s; i++)
                 {
-                    string temp = t;
+                    string v = u;
                     for (char ch = 'a'; ch <= 'z'; ch++)
                     {
-                        temp[i] = ch;
-                        if (!mp.count(temp) && dict.count(temp))
-                            mp[temp] = x, q.push(temp);
+                        v[i] = ch;
+                        // if depth of new word not calculated and word avl in list update depth and add to queue
+                        if (!depth.count(v) and dict.count(v))
+                            depth[v] = x, q.push(v);
                     }
                 }
             }
         }
-        if (mp.count(endWord))
-            dfs(endWord);
-        return res;
+        dfs(endWord,beginWord);
+        return ans;
     }
 };
