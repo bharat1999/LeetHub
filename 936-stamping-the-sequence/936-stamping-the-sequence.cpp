@@ -1,52 +1,55 @@
 class Solution {
 public:
     
-    bool canReplace(string &stamp,string &target,int pos){
-        int m=stamp.size(),n=target.size();
-        for(int i=0;i<m;i++){
-            if(target[i+pos]!='?' and target[i+pos]!=stamp[i])
+    // match two strings along with wildcard character '?'
+    // '?' matches with all characters (e.g. abc == a?c)
+    bool match(string &a,string &b){
+        if(a.length() != b.length()) 
+            return false;
+        for(int i=0;i<a.length();i++)
+            if(a.at(i) != b.at(i) && a.at(i) != '?' && b.at(i) != '?') 
                 return false;
-        }
         return true;
     }
     
-    
-    int replace(string &stamp,string &target,int pos){
-        int cnt=0;
-        int m=stamp.size(),n=target.size();
-        for(int i=0;i<m;i++){
-            if(target[i+pos]!='?'){
-                cnt++;
-                target[i+pos]='?';
-            }
-        }
-        return cnt;
+    // check if the string is all wildcard characters
+    bool allWild(string &s){
+        for(int i=0;i<s.length();i++)
+            if(s.at(i) != '?') 
+                return false;
+        return true;
     }
     
     vector<int> movesToStamp(string stamp, string target) {
-        
+        int n = target.length(), m = stamp.length();
         vector<int> ans;
+        string str ; 
+        bool foundMatch = true;
         
-        int m=stamp.size(),n=target.size();
-        
-        int count=0;
-        
-        vector<int> vis(n+1,0);
-        
-        while(count!=n){
-            bool flag=false;
-            for(int i=0;i<=n-m;i++){
-                if(!vis[i] and canReplace(stamp,target,i)){
-                    vis[i]=1;
-                    count+=replace(stamp,target,i);
-                    flag=true;
-                    ans.push_back(i);
-                    if(count==n) break;
+        // loop until no more reverse stamping can be done
+        while(foundMatch){ 
+            foundMatch = false; // reset flag
+            for(int i=0;i<n-m+1;i++){
+                str = target.substr(i,m);  // get substr of length m
+                
+                // if its all windcard no need to stamp
+                if(allWild(str)) continue; 
+                if(match(stamp,str)){  // match substr with stamp
+                    foundMatch = true; // set flag
+                    ans.push_back(i); // push the i as match is found
+                    // replace all chars of str in target to '?'
+                    for(int j=0;j<m;j++) target[i+j] = '?'; 
                 }
             }
-            if(!flag) return {};
         }
+        
+        // base case
+        if(!allWild(target))  ans.clear();
+        if(ans.size() > 10*n) ans.clear();
+        
+        // reverse answer as we did the whole procedure in reverse
         reverse(ans.begin(),ans.end());
+        
         return ans;
     }
 };
