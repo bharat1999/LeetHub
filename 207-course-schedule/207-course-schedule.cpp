@@ -3,20 +3,17 @@ class Solution {
     vector<bool> visited,recStack;
     bool DFS(int i)
     {
-        if(!visited[i])
+        visited[i]=true;
+        recStack[i]=true;
+        for(auto x:adj[i])
         {
-            visited[i]=true;
-            recStack[i]=true;
-            for(auto x:adj[i])
-            {
-                // if neighbour not visited and its DFS give true means cycle
-                if(!visited[x] and DFS(x))
-                    return true;
-                // is neighbour visited and its already in recursion stack means its a back edge
-                // so return true for cycle detected
-                if(recStack[x])
-                    return true;
-            }
+            // if neighbour not visited and its DFS give true means cycle
+            if(!visited[x] and DFS(x))
+                return true;
+            // is neighbour visited and its already in recursion stack means its a back edge
+            // so return true for cycle detected
+            if(recStack[x])
+                return true;
         }
         // remove current node from recursion stack and return false
         recStack[i] = false;
