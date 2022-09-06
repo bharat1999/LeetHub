@@ -10,40 +10,41 @@
  * };
  */
 class Solution {
-    void dfs(TreeNode* root, TreeNode* parent, int& steps){
-        if(root == NULL) 
+    int ans = 0;
+    unordered_map<TreeNode*,TreeNode*> p;
+    void set(TreeNode* root,TreeNode* parent)
+    {
+        if(!root)
             return;
-        dfs(root->left, root, steps);
-        dfs(root->right, root, steps);
-        if(parent != NULL)
+        p[root] = parent;
+        set(root->left,root);
+        set(root->right,root);
+    }
+    void dfs(TreeNode* root)
+    {
+        if(!root)
+            return;
+        dfs(root->left);
+        dfs(root->right);
+        if(root->val>1)
         {
-            // if root have extra give to parent till it become one
-            if(root->val > 1)
-            {
-                while(root->val != 1)
-                {
-                    parent->val++;
-                    root->val--;
-                    steps++;
-                }
-            }
-            // if root need than borrow from parent till become one
-            else
-            {
-                while(root->val != 1)
-                {
-                    parent->val--;
-                    root->val++;
-                    steps++;
-                }
-            }   
+            int x = root->val -1;
+            p[root]->val+=x;
+            root->val-=x;
+            ans+=x;
+        }
+        if(root->val<1)
+        {
+            int x = 1 -root->val ;
+            p[root]->val-=x;
+            root->val-=x;
+            ans+=x;
         }
     }
 public:
     int distributeCoins(TreeNode* root) {
-        int steps = 0;
-        TreeNode* parent = NULL;
-        dfs(root, parent, steps);
-        return steps;
+        set(root,NULL);
+        dfs(root);
+        return ans;
     }
 };
