@@ -2,27 +2,27 @@ class Solution {
 public:
     int myAtoi(string s) {
         long long res = 0;
-        int sign = -1;
         int n = s.size();
         int i = 0;
         int order = 1;
         bool decimal = false;
         while(s[i]==' ')
             i++;
+        bool sign = true;
+        if(s[i]=='-' or s[i]=='+')
+        {
+            if(s[i]=='-')
+                sign = false;
+            i++;
+        }
         for(int j=i;j<n;j++)
         {
             char x = s[j];
-            if(x=='-')
+            if(x=='-' or x=='+')
             {
-                if(sign!=-1 or i!=j)
-                    break;
-                sign = 0;
-            }
-            else if(x=='+')
-            {
-                if(sign!=-1 or i!=j)
-                    break;
-                sign=1;
+                if(sign)
+                    return res;
+                return -1*res;
             }
             else if(x=='.')
                 decimal = true;
