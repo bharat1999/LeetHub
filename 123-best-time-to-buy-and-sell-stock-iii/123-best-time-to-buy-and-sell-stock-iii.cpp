@@ -19,13 +19,13 @@ class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         // means we cannot do 2 transactions
-        if (prices.size()<4) 
-        {
-            int res = 0;
-            for (int i = 1; i < prices.size(); i++) 
-                res += max(0, prices[i] - prices[i - 1]);
-            return res;
-        }
+        //if (prices.size()<4) 
+        //{
+            //int res = 0;
+            //for (int i = 1; i < prices.size(); i++) 
+            //    res += max(0, prices[i] - prices[i - 1]);
+          //  return res;
+        //}
         memset(dp,-1,sizeof(dp));
         return solve(prices,0,0,1);
     }
